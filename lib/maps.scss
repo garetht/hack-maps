@@ -37,9 +37,9 @@ body {
     bottom: 0;
     background-color: rgba(10, 10, 10, 0.5);
     z-index: -1;
-    visibility: 0;
-    transition: all 0.1s;
-    -webkit-transition: all 0.1s;
+    opacity: 0;
+    transition: 0.3s all;
+    -webkit-transition: 0.3s all;
 
     #youtube-video {
     margin: auto;
@@ -49,7 +49,7 @@ body {
   }
 
   .map-container {
-    width: 90%;
+    width: 70%;
     margin: auto;
   }
 
@@ -59,6 +59,7 @@ body {
     font-weight: 300;
     font-size: 64px;
     color: #efefef;
+    margin-bottom: -90px;
     text-align: center;
   }
 
@@ -71,6 +72,7 @@ body {
       stroke-width: 1px;
 
       transition: 0.3s all;
+      -webkit-transition: 0.3s all;
 
       &:hover {
         stroke-width: 2px;
@@ -121,14 +123,19 @@ body {
         padding-bottom: 10px;
       }
 
+      .top-price-type {
+        line-height: 1.1;
+        font-size: 24px;
+      }
+
       .top-price-title,
       .top-price-venue {
         line-height: 1.1;
-        font-size: 14px
+        font-size: 16px
       }
 
       .top-price-venue {
-        font-size: 12px;
+        font-size: 14px;
       }
 
       .no-data {
@@ -138,75 +145,114 @@ body {
   }
 
   .range-control {
+    font-family: "Lato";
+    font-size: 1.5rem;
+    width: 800px;
+    margin: auto;
+
     .range-value {
+      float: left;
       color: #eee;
+      text-align: right;
+    }
+    .range-slider{
+      float: right;
+      margin-top: 4px;
     }
   }
 
   .other-maps {
     padding: 20px;
     .other-maps-slider {
-      width: 300px;
+      width: 560px;
       margin: auto;
     }
-    .panel-1, .panel-2 {
+    .panel {
       float: left;
       padding: 10px;
       font-family: "Lato";
       color: #eee;
       border: 1px solid #eee;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
 
       &:hover {
         cursor: pointer;
       }
     }
-    .panel-1 {
 
-      background-color: #C71B24;
+    .panel:first-child {
       border-top-left-radius: 4px;
       border-bottom-left-radius: 4px;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
-
-      &:hover {
-        background-color: #E93A33;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
-      }
     }
-    .panel-2 {
-      background-color: #278846;
+
+    .panel:last-child {
       border-top-right-radius: 4px;
       border-bottom-right-radius: 4px;
-      -webkit-transition: 0.4s;
-      transition: 0.4s;
+    }
+
+    #panel-1 {
+      background-color: #08519c;
 
       &:hover {
-        background-color: #44A85E;
-        -webkit-transition: 0.4s;
-        transition: 0.4s;
+        background-color: #4292c6;
       }
     }
+    #panel-2 {
+      background-color: #006d2c;
+
+      &:hover {
+        background-color: #41ab5d;
+      }
+    }
+    #panel-3 {
+      background-color: #a63603;
+
+      &:hover {
+        background-color: #f16913;
+      }
+    }
+    #panel-4 {
+      background-color: #a50f15;
+
+      &:hover {
+        background-color: #ef3b2c;
+      }
+    }
+    #panel-5 {
+      background-color: #54278f;
+
+      &:hover {
+        background-color: #807dba;
+      }
+    }
+    #panel-6 {
+      background-color: #252525;
+
+      &:hover {
+        background-color: #737373;
+      }
+    }
+
   }
 }
 
 input[type="range"]{
-    background: #aaa;
-    width: 500px;
-    height: 4px;
+    background: rgba(200, 200, 200, 0.5);
+    width: 400px;
+    height: 22px;
     -webkit-appearance: none;
-    border-radius: 2px;
+    border-radius: 25px;
 
     &::-webkit-slider-thumb {
       -webkit-appearance:none !important;
-      width:15px;
-      height:10px;
+      width:30px;
+      height:22px;
       -webkit-appearance: none;
       border-radius: 25px;
       -moz-border-radius: 25px;
       -webkit-border-radius: 25px;
-      border:1px solid black;
-      background: #fff;
+      background: #fafafa;
     }
 }
 

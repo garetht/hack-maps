@@ -16,14 +16,14 @@ function topSports(map, dataSource, tones, categories) {
 
     $(".range-slider").attr("min", min_price)
                       .attr("max", max_price)
-                      .val(max_price);
+                      .val(min_price);
+    $(".range-price").text(min_price);
 
     // var color = chroma.scale(tone).domain(domains, 50, 'log');
     var colors = _(tones).map(function(tone) {
       return chroma.scale(tone).domain(domains, 50, 'log');
     });
 
-    categories = ["Basketball", "Baseball"];
     map.addLayer('usa', {
     click: function(d, path, event) {
       var state = _(dataSource).find(function(price) {
@@ -35,7 +35,7 @@ function topSports(map, dataSource, tones, categories) {
 
         if (player === undefined) {
           player = new YT.Player('youtube-video', {
-            height: '50%',
+            height: '60%',
             width: '50%',
             videoId: video_id,
             events: {
@@ -54,7 +54,7 @@ function topSports(map, dataSource, tones, categories) {
         }
 
         $(".youtube-lightbox").css({"z-index": "18000",
-                                    "visibility": "1"});
+                                    "opacity": "1"});
       }
     },
     styles: {
@@ -63,7 +63,7 @@ function topSports(map, dataSource, tones, categories) {
           return price["State Full"] == d.name;
         });
         if (state) {
-          index = categories.indexOf("Basketball"); //indexOf(d.sport_name)
+          var index = categories.indexOf(state["Event Type"]) < 0 ? categories.length - 1 : categories.indexOf(state["Event Type"]);
           shade = colors[index](state["Avg Price"]);
           return shade;
         } else {
@@ -75,7 +75,7 @@ function topSports(map, dataSource, tones, categories) {
           return price["State Full"] == d.name;
         });
         if (state) {
-          index = categories.indexOf("Basketball"); //indexOf(d.sport_name)
+          var index = categories.indexOf(state["Event Type"]) < 0 ? categories.length - 1 : categories.indexOf(state["Event Type"]);
           shade = colors[index](state["Avg Price"]).darker();
           return shade;
         } else {
@@ -108,7 +108,7 @@ function topSports(map, dataSource, tones, categories) {
     $(this).css("fill", chroma($(this).attr("fill")).brighten(8));
          });
 
-  return map;
+  return map.getLayer('usa');
 }
 
 $(function() {
@@ -128,28 +128,74 @@ $(function() {
       datum["Avg Price"] = Number(datum["Avg Price"].replace(/[\$,]/g, ""));
       return datum;
     });
+    // {"Alabama": 12.34}
+    var priceMap = {};
+    _(top_prices).each(function(datum) {
+      priceMap[datum["State Full"]] = datum["Avg Price"];
+    });
 
-    var mapData = topSports(map, top_prices, ["Reds"]);
+    var cats = ["NFL", "College Football", "NBA", "College Basketball", "MLB", "Other"];
+    var colors = ["Blues", "Greens", "Oranges", "Reds", "Purples", "Greys"];
+
+    var typeMap = {};
+    _(top_prices).each(function(datum) {
+      if (cats.slice(0, -1).indexOf(datum["Event Type"]) >= 0)
+        typeMap[datum["State Full"]] = datum["Event Type"];
+      else
+        typeMap[datum["State Full"]] = "Other";
+    });
+
+    var mapData = topSports(map, top_prices, colors, cats);
 
     $(".panel-1").on("click", function() {
       topSports(map, top_prices, ["Reds"]);
     });
-    $(".panel-2").on("click", function() {
-      topSports(map, top_prices, ["Greens"]);
-    });
 
     $(".range-slider").on("change", function() {
-
-      $(".range-value").text($(this).val());
+      $(".range-price").text($(this).val());
     });
 
     $(".youtube-lightbox").click(function() {
       $("#youtube-video").hide();
       player.stopVideo();
-      $(this).css({"visibility": 0, "z-index": -1});
+      $(this).css({"opacity": 0, "z-index": -1});
     });
 
+    $(".range-slider").on("change", function() {
+      var value = $(this).val();
+      var toShow = mapData.paths.filter(function(path) {
+        return priceMap[path.data.name] >= value;
+      }).map(function(path) {
+        return "#" + path.svgPath[0].id;
+      });
+      var toHide = mapData.paths.filter(function(path) {
+        return priceMap[path.data.name] < value || !priceMap[path.data.name];
+      }).map(function(path) {
+        return "#" + path.svgPath[0].id;
+      });
+      $(toShow.join(",")).css({"opacity": 1, "z-index": 1});
+      $(toHide.join(",")).css({"opacity": 0.1, "z-index": -1});
+    });
 
+    $(".panel").on("click", function() {
+      var value = $(this).text();
+      if (value === "All") {
+        $("path").css({"opacity": 1});
+      } else {
+        var toShow = mapData.paths.filter(function(path) {
+          return typeMap[path.data.name] == value;
+        }).map(function(path) {
+          return "#" + path.svgPath[0].id;
+        });
+        var toHide = mapData.paths.filter(function(path) {
+          return typeMap[path.data.name] != value || !typeMap[path.data.name];
+        }).map(function(path) {
+          return "#" + path.svgPath[0].id;
+        });
+        $(toShow.join(",")).css({"opacity": 1, "z-index": 1});
+        $(toHide.join(",")).css({"opacity": 0.1, "z-index": -1});
+      }
+    });
 
   });
 

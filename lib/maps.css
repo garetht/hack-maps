@@ -16,9 +16,9 @@ body {
     bottom: 0;
     background-color: rgba(10, 10, 10, 0.5);
     z-index: -1;
-    visibility: 0;
-    transition: all 0.1s;
-    -webkit-transition: all 0.1s; }
+    opacity: 0;
+    transition: 0.3s all;
+    -webkit-transition: 0.3s all; }
     body .youtube-lightbox #youtube-video {
       margin: auto;
       position: absolute;
@@ -27,7 +27,7 @@ body {
       bottom: 0;
       right: 0; }
   body .map-container {
-    width: 90%;
+    width: 70%;
     margin: auto; }
   body .maps-title {
     padding-top: 25px;
@@ -35,13 +35,15 @@ body {
     font-weight: 300;
     font-size: 64px;
     color: #efefef;
+    margin-bottom: -90px;
     text-align: center; }
   body #usamap {
     width: 100%;
     height: 100%; }
     body #usamap path {
       stroke-width: 1px;
-      transition: 0.3s all; }
+      transition: 0.3s all;
+      -webkit-transition: 0.3s all; }
       body #usamap path:hover {
         stroke-width: 2px; }
   body .qtip {
@@ -77,63 +79,87 @@ body {
       body .qtip .qtip-content .top-price {
         font-size: 20px;
         padding-bottom: 10px; }
+      body .qtip .qtip-content .top-price-type {
+        line-height: 1.1;
+        font-size: 24px; }
       body .qtip .qtip-content .top-price-title,
       body .qtip .qtip-content .top-price-venue {
         line-height: 1.1;
-        font-size: 14px; }
+        font-size: 16px; }
       body .qtip .qtip-content .top-price-venue {
-        font-size: 12px; }
+        font-size: 14px; }
       body .qtip .qtip-content .no-data {
         font-size: 14px; }
-  body .range-control .range-value {
-    color: #eee; }
+  body .range-control {
+    font-family: "Lato";
+    font-size: 1.5rem;
+    width: 800px;
+    margin: auto; }
+    body .range-control .range-value {
+      float: left;
+      color: #eee;
+      text-align: right; }
+    body .range-control .range-slider {
+      float: right;
+      margin-top: 4px; }
   body .other-maps {
     padding: 20px; }
     body .other-maps .other-maps-slider {
-      width: 300px;
+      width: 560px;
       margin: auto; }
-    body .other-maps .panel-1, body .other-maps .panel-2 {
+    body .other-maps .panel {
       float: left;
       padding: 10px;
       font-family: "Lato";
       color: #eee;
-      border: 1px solid #eee; }
-      body .other-maps .panel-1:hover, body .other-maps .panel-2:hover {
+      border: 1px solid #eee;
+      -webkit-transition: 0.4s;
+      transition: 0.4s; }
+      body .other-maps .panel:hover {
         cursor: pointer; }
-    body .other-maps .panel-1 {
-      background-color: #C71B24;
+    body .other-maps .panel:first-child {
       border-top-left-radius: 4px;
-      border-bottom-left-radius: 4px;
-      -webkit-transition: 0.4s;
-      transition: 0.4s; }
-      body .other-maps .panel-1:hover {
-        background-color: #E93A33;
-        -webkit-transition: 0.4s;
-        transition: 0.4s; }
-    body .other-maps .panel-2 {
-      background-color: #278846;
+      border-bottom-left-radius: 4px; }
+    body .other-maps .panel:last-child {
       border-top-right-radius: 4px;
-      border-bottom-right-radius: 4px;
-      -webkit-transition: 0.4s;
-      transition: 0.4s; }
-      body .other-maps .panel-2:hover {
-        background-color: #44A85E;
-        -webkit-transition: 0.4s;
-        transition: 0.4s; }
+      border-bottom-right-radius: 4px; }
+    body .other-maps #panel-1 {
+      background-color: #08519c; }
+      body .other-maps #panel-1:hover {
+        background-color: #4292c6; }
+    body .other-maps #panel-2 {
+      background-color: #006d2c; }
+      body .other-maps #panel-2:hover {
+        background-color: #41ab5d; }
+    body .other-maps #panel-3 {
+      background-color: #a63603; }
+      body .other-maps #panel-3:hover {
+        background-color: #f16913; }
+    body .other-maps #panel-4 {
+      background-color: #a50f15; }
+      body .other-maps #panel-4:hover {
+        background-color: #ef3b2c; }
+    body .other-maps #panel-5 {
+      background-color: #54278f; }
+      body .other-maps #panel-5:hover {
+        background-color: #807dba; }
+    body .other-maps #panel-6 {
+      background-color: #252525; }
+      body .other-maps #panel-6:hover {
+        background-color: #737373; }
 
 input[type="range"] {
-  background: #aaa;
-  width: 500px;
-  height: 4px;
+  background: rgba(200, 200, 200, 0.5);
+  width: 400px;
+  height: 22px;
   -webkit-appearance: none;
-  border-radius: 2px; }
+  border-radius: 25px; }
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none !important;
-    width: 15px;
-    height: 10px;
+    width: 30px;
+    height: 22px;
     -webkit-appearance: none;
     border-radius: 25px;
     -moz-border-radius: 25px;
     -webkit-border-radius: 25px;
-    border: 1px solid black;
-    background: #fff; }
+    background: #fafafa; }
