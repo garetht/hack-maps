@@ -4,7 +4,15 @@ _.templateSettings = {
 
 //There must be at least as many tones as categories!
 function topSports(map, dataSource, tones, domains, categories) {
+    var min_price, max_price;
     var shade;
+
+    //Extract number from price
+    // dataSource = _(dataSource).map(function(datum) {
+    //   datum["Avg Price"] = Number(datum["Avg Price"].replace(/[\$,]/g, ""));
+    //   return datum;
+    // });
+
     // var color = chroma.scale(tone).domain(domains, 50, 'log');
     var colors = _(tones).map(function(tone) {
       return chroma.scale(tone).domain(domains, 50, 'log');
@@ -18,11 +26,8 @@ function topSports(map, dataSource, tones, domains, categories) {
         });
         if (state) {
           index = categories.indexOf("Basketball"); //indexOf(d.sport_name)
-          if (true) {
-            shade = colors[index](Number(state["Avg Price"].replace(/[\$,]/g, "")));
-          } else {
-            shade = colors[index](Number(state["Avg Price"].replace(/[\$,]/g, "")));
-          }
+          avgPrice = Number(state["Avg Price"].replace(/[\$,]/g, ""));
+          shade = colors[index](avgPrice);
           return shade;
         } else {
           return "#eee";
