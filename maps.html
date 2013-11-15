@@ -2,12 +2,15 @@
 <head>
   <title>Maps</title>
   <link rel="stylesheet" href="lib/maps.css">
-<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
-<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.min.css">
+  <link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.min.css">
 </head>
 <body>
 
+<div class="youtube-lightbox">
+  <div id="youtube-video"></div>
+</div>
 
 <div class="map-container">
 
@@ -20,7 +23,8 @@
 </div>
 
 <div class="range-control">
-  <input type="range">
+  <input type="range" class="range-slider">
+  <div class="range-value"></div>
 </div>
 
 <div class="other-maps">
@@ -32,7 +36,7 @@
 
 <script type="text/template" id="top-price-template">
   <div class="top-price">
-    <strong>{{state["Avg Price"]}}</strong>
+    <strong>${{state["Avg Price"]}}</strong>
   </div>
   <div class="top-price-title">
     {{state["Title"]}}
@@ -40,6 +44,7 @@
   <div class="top-price-venue">
     <strong>{{state["Venue "]}}</strong>, {{state["City"]}}, {{state["State"]}}
   </div>
+
 </script>
 
 <script type="text/template" id="no-data-template">
@@ -52,6 +57,7 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.0/angular.min.js"></script>
+<script src="https://www.youtube.com/iframe_api/"></script>
 <script src="js/top_prices.json"></script>
 <script src="js/underscore-min.js"></script>
 <script src="js/raphael-min.js"></script>

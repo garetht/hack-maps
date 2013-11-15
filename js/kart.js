@@ -2,23 +2,61 @@ _.templateSettings = {
   interpolate: /\{\{(.+?)\}\}/g
 };
 
+var player;
+
 //There must be at least as many tones as categories!
-function topSports(map, dataSource, tones, domains, categories) {
+function topSports(map, dataSource, tones, categories) {
     var min_price, max_price;
     var shade;
+    var domains = _(dataSource).pluck("Avg Price");
 
-    //Extract number from price
-    // dataSource = _(dataSource).map(function(datum) {
-    //   datum["Avg Price"] = Number(datum["Avg Price"].replace(/[\$,]/g, ""));
-    //   return datum;
-    // });
+    //Acquire max and min prices
+    min_price = Math.min.apply(null, domains);
+    max_price = Math.max.apply(null, domains);
+
+    $(".range-slider").attr("min", min_price)
+                      .attr("max", max_price)
+                      .val(max_price);
 
     // var color = chroma.scale(tone).domain(domains, 50, 'log');
     var colors = _(tones).map(function(tone) {
       return chroma.scale(tone).domain(domains, 50, 'log');
     });
+
     categories = ["Basketball", "Baseball"];
     map.addLayer('usa', {
+    click: function(d, path, event) {
+      var state = _(dataSource).find(function(price) {
+          return price["State Full"] == d.name;
+        });
+      var youtube = state["Youtube"];
+      if (youtube !== "") {
+        video_id = youtube.match(/watch\?v=(.*)/)[1];
+
+        if (player === undefined) {
+          player = new YT.Player('youtube-video', {
+            height: '50%',
+            width: '50%',
+            videoId: video_id,
+            events: {
+              'onReady': onPlayerReady
+            }
+          });
+        } else {
+          player.loadVideoById({
+            videoId: video_id
+          });
+          $("#youtube-video").show();
+        }
+
+        function onPlayerReady(e) {
+          e.target.playVideo();
+        }
+
+        $(".youtube-lightbox").css({"z-index": "18000",
+                                    "visibility": "1"});
+      }
+    },
     styles: {
       fill: function(d) {
         var state = _(dataSource).find(function(price) {
@@ -26,8 +64,7 @@ function topSports(map, dataSource, tones, domains, categories) {
         });
         if (state) {
           index = categories.indexOf("Basketball"); //indexOf(d.sport_name)
-          avgPrice = Number(state["Avg Price"].replace(/[\$,]/g, ""));
-          shade = colors[index](avgPrice);
+          shade = colors[index](state["Avg Price"]);
           return shade;
         } else {
           return "#eee";
@@ -39,7 +76,7 @@ function topSports(map, dataSource, tones, domains, categories) {
         });
         if (state) {
           index = categories.indexOf("Basketball"); //indexOf(d.sport_name)
-          var shade = colors[0](Number(state["Avg Price"].replace(/[\$,]/g, ""))).darker();
+          shade = colors[index](state["Avg Price"]).darker();
           return shade;
         } else {
           return "#aaa";
@@ -60,13 +97,18 @@ function topSports(map, dataSource, tones, domains, categories) {
     }
   });
 
-  $("path").on("mouseenter", function() {
-    var color = $(this).css("fill");
-    $(this).css("fill", chroma(color).brighten());
-  });
-  $("path").on("mouseleave", function() {
+
+  $("path").mouseenter(function() {
+    $(this).css("fill", chroma($(this).attr("fill")).brighten(8));
+         }).mouseleave(function() {
     $(this).css("fill", $(this).attr("fill"));
-  });
+         }).mousedown(function() {
+    $(this).css("fill", chroma($(this).attr("fill")).brighten(16));
+         }).mouseup(function() {
+    $(this).css("fill", chroma($(this).attr("fill")).brighten(8));
+         });
+
+  return map;
 }
 
 $(function() {
@@ -81,19 +123,35 @@ $(function() {
   map.loadMap("usa.svg")
   .done(function() {
 
-  var domains = _(top_prices).map(function(price) {
-    return Number(price["Avg Price"].replace(/[\$,]/g, ""));
-  });
+    //Extract number from price
+    top_prices = _(top_prices).map(function(datum) {
+      datum["Avg Price"] = Number(datum["Avg Price"].replace(/[\$,]/g, ""));
+      return datum;
+    });
 
-    topSports(map, top_prices, ["Reds"], domains);
+    var mapData = topSports(map, top_prices, ["Reds"]);
 
     $(".panel-1").on("click", function() {
-      topSports(map, top_prices, ["Reds"], domains);
+      topSports(map, top_prices, ["Reds"]);
     });
     $(".panel-2").on("click", function() {
-      topSports(map, top_prices, ["Greens"], domains);
+      topSports(map, top_prices, ["Greens"]);
     });
 
+    $(".range-slider").on("change", function() {
+
+      $(".range-value").text($(this).val());
+    });
+
+    $(".youtube-lightbox").click(function() {
+      $("#youtube-video").hide();
+      player.stopVideo();
+      $(this).css({"visibility": 0, "z-index": -1});
+    });
+
+
+
   });
+
 });
 
