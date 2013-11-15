@@ -1,0 +1,61 @@
+<html>
+<head>
+  <title>Maps</title>
+  <link rel="stylesheet" href="lib/maps.css">
+<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.min.css">
+</head>
+<body>
+
+
+<div class="map-container">
+
+  <div class="maps-title">
+    <strong>SeatGeek</strong> Maps
+  </div>
+
+  <div id="usamap"></div>
+
+</div>
+
+<div class="range-control">
+  <input type="range">
+</div>
+
+<div class="other-maps">
+  <div class="other-maps-slider clearfix">
+    <div class="panel-1">Sports Tickets</div>
+    <div class="panel-2">Concert Tickets</div>
+  </div>
+</div>
+
+<script type="text/template" id="top-price-template">
+  <div class="top-price">
+    <strong>{{state["Avg Price"]}}</strong>
+  </div>
+  <div class="top-price-title">
+    {{state["Title"]}}
+  </div>
+  <div class="top-price-venue">
+    <strong>{{state["Venue "]}}</strong>, {{state["City"]}}, {{state["State"]}}
+  </div>
+</script>
+
+<script type="text/template" id="no-data-template">
+  <div class="no-data">
+    Data not available.
+  </div>
+</script>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/qtip2/2.1.1/jquery.qtip.min.js"></script>
+<script src="js/top_prices.json"></script>
+<script src="js/underscore-min.js"></script>
+<script src="js/raphael-min.js"></script>
+<script src="js/kartograph.min.js"></script>
+<script src="js/chroma.min.js"></script>
+<script src="js/kart.js"></script>
+</body>
+</html>

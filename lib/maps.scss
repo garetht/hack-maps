@@ -1,0 +1,202 @@
+@mixin transitionable($duration: 0.4s) {
+          transition: $duration all;
+  -webkit-transition: $duration all;
+}
+
+@mixin gradient($hex1, $hex2, $rgb1, $rgb2) {
+  background-color: $hex1;
+  background-image: -webkit-gradient(linear, left top, left bottom, from($rgb1), to($rgb2));
+  background-image: -webkit-linear-gradient(top, $rgb1, $rgb2);
+  background-image: -moz-linear-gradient(top, $rgb1, $rgb2);
+  background-image: -o-linear-gradient(top, $rgb1, $rgb2);
+  background-image: -ms-linear-gradient(top, $rgb1, $rgb2);
+  background-image: linear-gradient(top, $rgb1, $rgb2);
+  filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='$hex1', EndColorStr='$hex2');
+}
+
+.clearfix:after {
+  clear: both;
+  display: table;
+  content: "";
+}
+
+body {
+
+  background: url("dark_wall_@2X.png") repeat;
+
+  .map-container {
+    width: 1100px;
+    margin: auto;
+  }
+
+  .maps-title {
+    padding-top: 25px;
+    font-family: 'Lato', serif;
+    font-weight: 300;
+    font-size: 64px;
+    color: #efefef;
+    text-align: center;
+  }
+
+  #usamap {
+    width: 1100px;
+
+    path {
+      stroke-width: 1px;
+
+
+      transition: 0.5s all;
+
+      &:hover {
+        stroke-width: 2px;
+      }
+    }
+  }
+
+  .qtip {
+    border-radius: 4px;
+    -webkit-box-shadow: 1px 1px 7px rgba(50, 50, 50, 0.43);
+    -moz-box-shadow:    1px 1px 7px rgba(50, 50, 50, 0.43);
+    box-shadow:         1px 1px 7px rgba(50, 50, 50, 0.43);
+
+    .qtip-titlebar {
+      background-color: #007af5;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(rgb(0, 122, 245)), to(rgb(0, 163, 236)));
+      background-image: -webkit-linear-gradient(top, rgb(0, 122, 245), rgb(0, 163, 236));
+      background-image: -moz-linear-gradient(top, rgb(0, 122, 245), rgb(0, 163, 236));
+      background-image: -o-linear-gradient(top, rgb(0, 122, 245), rgb(0, 163, 236));
+      background-image: -ms-linear-gradient(top, rgb(0, 122, 245), rgb(0, 163, 236));
+      background-image: linear-gradient(top, rgb(0, 122, 245), rgb(0, 163, 236));
+      filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#007af5', EndColorStr='#00a3ec');
+      font-family: "Oswald";
+      font-size: 20px;
+      color: #fff;
+      padding: 15px;
+      border: 1px solid #fbfbfb;
+      border-radius: 4px 4px 0px 0px;
+      border: {
+        top-right-radius: 4px;
+        top-left-radius: 4px;
+      }
+    }
+
+    .qtip-content {
+      background-color: #ccc;
+      font-family: "Lato";
+      font-size: 24px;
+      padding: 15px;
+      border: 1px solid #fafafa;
+      border: {
+        bottom-right-radius: 4px;
+        bottom-left-radius: 4px;
+      }
+
+      .top-price {
+        font-size: 20px;
+        padding-bottom: 10px;
+      }
+
+      .top-price-title,
+      .top-price-venue {
+        line-height: 1.1;
+        font-size: 14px
+      }
+
+      .top-price-venue {
+        font-size: 12px;
+      }
+
+      .no-data {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .other-maps {
+    padding: 20px;
+    .other-maps-slider {
+      width: 300px;
+      margin: auto;
+    }
+    .panel-1, .panel-2 {
+      float: left;
+      padding: 10px;
+      font-family: "Lato";
+      color: #eee;
+      border: 1px solid #eee;
+    }
+    .panel-1 {
+
+      background-color: #C71B24;
+      border-top-left-radius: 4px;
+      border-bottom-left-radius: 4px;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+
+      &:hover {
+        background-color: #E93A33;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+    }
+    .panel-2 {
+      background-color: #278846;
+      border-top-right-radius: 4px;
+      border-bottom-right-radius: 4px;
+      -webkit-transition: 0.4s;
+      transition: 0.4s;
+
+      &:hover {
+        background-color: #44A85E;
+        -webkit-transition: 0.4s;
+        transition: 0.4s;
+      }
+    }
+  }
+}
+
+input[type="range"]{
+    background: #aaa;
+    width: 500px;
+    height: 4px;
+    -webkit-appearance: none;
+    border-radius: 2px;
+}
+
+input[type="range"]:hover{
+    background: rgb(194, 139, 131);
+    width: 130px;
+    height: 6px;
+    -webkit-appearance: none;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    -webkit-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+    -moz-box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+    box-shadow: inset 0px 0px 1px 1px rgba(0, 0, 0, 0.9), 0px 1px 1px 0px rgba(255, 255, 255, 0.13);
+}
+
+input[type="range"]::-webkit-slider-thumb{
+   -webkit-appearance:none !important;
+   width:15px;
+   height:10px;
+   -webkit-appearance: none;
+    border-radius: 25px;
+    -moz-border-radius: 25px;
+    -webkit-border-radius: 25px;
+    border:1px solid black;
+
+    background: #fff;
+ }
+
+input[type="range"]::-webkit-slider-thumb:hover{
+   -webkit-appearance:none !important;
+   width:25px;
+   height:15px;
+   -webkit-appearance: none;
+    border-radius: 8px;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+    background-color:#aaa;
+    border:1px solid black;
+ }
